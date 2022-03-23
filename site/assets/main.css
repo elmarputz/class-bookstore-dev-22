@@ -1,0 +1,24 @@
+body {
+  padding-top: 60px;
+}
+
+.centered {
+  text-align: center;
+}
+
+.navbar .login {
+  float: right;
+}
+.navbar .login form {
+  margin: 0; padding: 0;
+}
+
+.footer {
+
+  margin-top: 30px;
+}
+
+.add-remove input {
+    width: 30px;
+    text-algin: center;
+}
