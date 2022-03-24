@@ -2,15 +2,15 @@
 
 namespace Bookshop;
 
-class Book {
+class Book extends Entity {
 
     private int $categoryId; 
     private string $title;
     private string $author; 
     private float $price;
 
-    public function __construct(int $categoryId, string $title, string $author, float $price) {
-
+    public function __construct(int $id, int $categoryId, string $title, string $author, float $price) {
+        parent::__construct($id);
         $this->categoryId = $categoryId;
         $this->title = $title; 
         $this->author = $author; 

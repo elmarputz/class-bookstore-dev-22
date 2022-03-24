@@ -11,6 +11,6 @@
 
 <?php require_once('views/partials/footer.php');
 
-$book = new \Bookshop\Book(1,"asdlfkjasl","alkdjflasdkj", 10);
+$book = new \Bookshop\Book(1, 1,"asdlfkjasl","alkdjflasdkj", 10);
 var_dump($book);
 ?>
