@@ -14,4 +14,7 @@ spl_autoload_register(function ($class) {
 
 });
 
+// datamanager dependency injection 
+$mode = 'mock';
 
+require_once(__DIR__ . '/../lib/Data/DataManager_' . $mode . '.php');

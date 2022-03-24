@@ -21,5 +21,7 @@ var_dump($category);
 $user = new \Bookshop\User(1, "fritz", "alksdjfl2323");
 var_dump($user);
 
+$categories = \Data\DataManager::getCategories();
+var_dump($categories);
 
 ?>

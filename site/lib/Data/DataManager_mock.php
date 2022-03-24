@@ -41,7 +41,7 @@ class DataManager implements IDataManager {
               $data = [
                 1 => new User(1, "scm4", "a8af855d47d091f0376664fe588207f334cdad22"), //USER = scm4; PASSWORD = scm4
               ];
-				      break;
+			  break;
         }
         return $data;
 
@@ -49,25 +49,31 @@ class DataManager implements IDataManager {
 
 
     public static function getCategories() : array {
-
+        return self::getMockData('categories');
     }
 
     public static function getBooksByCategory(int $categoryId) : array {
-        
+        $res = [];
+        foreach (self::getMockData('books') as $book) {
+            if ($book->getCategoryId() == $categoryId) {
+                $res[] = $book;
+            }
+        }
+        return $res;
     }
 
 
     public static function getUserById (int $userId) : ?User {
-
+        return null;
     }
 
     public static function getUserByUserName (string $userName) : ?User {
-
+        return null;
     }
 
 
     public static function createOrder (int $userId, array $bookIds, string $nameOnCard, string $cardNumber) : int {
-
+        return rand();
     }
 
 
