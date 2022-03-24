@@ -63,6 +63,19 @@ class DataManager implements IDataManager {
     }
 
 
+    public static function getBooksForSearchCriteria (string $term) : array {
+        $res = [];
+        foreach (self::getMockData('books') as $book) {
+           $termOk = (
+                $term == '' || stripos($book->getTitle(), $term) !== false
+           );
+           if ($termOk) 
+            $res[] = $book;
+        }
+     
+        return $res;
+    }
+
     public static function getUserById (int $userId) : ?User {
         return null;
     }
