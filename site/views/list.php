@@ -24,13 +24,13 @@ require_once('views/partials/header.php'); ?>
     <?php } // end foreach ?>    
 </ul>
 
-<?php if (isset($books)) { ?>
-
-    <?php 
-        $test = '<script>alert("Hello world!");</script>';
-        echo Util::escape($test); 
-        // var_dump($books); ?>
-    
-<?php } // if (isset($books)) ?>    
-
+<?php if (isset($books)) { 
+    if (sizeof($books) > 0) {
+        require('views/partials/booklist.php');
+    } else { ?>
+    <div class="alert alert-warning" role="alert">No books in this category.</div>
+    <?php } ?>
+<?php } else { // if (isset($books)) ?>    
+    <div class="alert alert-info" role="alert">Please select a category</div>
+<?php } ?>    
 <?php require_once('views/partials/footer.php'); ?>
