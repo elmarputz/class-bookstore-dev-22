@@ -1,6 +1,15 @@
 <?php
+
+use Bookshop\AuthenticationManager;
 use Bookshop\Util, Bookshop\ShoppingCart;
 $cartSize = ShoppingCart::size();
+
+$user = AuthenticationManager::getAuthenticatedUser();
+
+if (isset($_REQUEST["errors"])) {
+    $errors = unserialize(urldecode($_REQUEST["errors"]));
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -46,7 +55,7 @@ $cartSize = ShoppingCart::size();
                        <span class="badge"><?php echo Bookshop\Util::escape($cartSize); ?></span> <span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span></a>
                 </li>
                 <li class="dropdown">
-                    <?php /* if ($user == null): ?>
+                    <?php  if ($user == null): ?>
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
                             Not logged in!
                             <b class="caret"></b>
@@ -58,18 +67,18 @@ $cartSize = ShoppingCart::size();
                         </ul>
                     <?php else: ?>
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-                  Logged in as  <span class="badge"><?php // echo Util::escape($user->getUserName()); ?></span>
+                  Logged in as  <span class="badge"><?php echo Util::escape($user->getUserName()); ?></span>
                   <b class="caret"></b>
                 </a>
                 </a>
                 <ul class="dropdown-menu" role="menu">
                   <li class="centered">
-                    <form method="post" action="<?php // echo Util::action(Bookshop\Controller::ACTION_LOGOUT); ?>">
+                    <form method="post" action="<?php echo Util::action(Bookshop\Controller::ACTION_LOGOUT); ?>">
                       <input class="btn btn-xs" role="button" type="submit" value="Logout" />
                     </form>
                     </li>
                   </ul>
-              <?php endif; */ ?>
+              <?php endif;  ?>
                 </li>
             </ul> <!-- /. login -->
         </div><!--/.nav-collapse -->

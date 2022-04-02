@@ -8,6 +8,10 @@ class Controller {
     public const PAGE = 'page';
     public const ACTION_ADD = 'addToCart';
     public const ACTION_REMOVE = 'removeFromCart';
+    public const ACTION_LOGIN = 'login';
+    public const ACTION_LOGOUT = 'logout';
+    public const USER_NAME = 'userName';
+    public const USER_PASSWORD = 'password';
 
 
     private static $instance = false;
@@ -45,9 +49,38 @@ class Controller {
                 Util::redirect();
                 break;
 
+            case self::ACTION_LOGIN: 
+                if (!AuthenticationManager::authenticate(
+                    $_REQUEST[self::USER_NAME], $_REQUEST[self::USER_PASSWORD])) {
+                        $this->forwardRequest(array('Invalid username or password'));
+                    }
+                Util::redirect();
+                break;
+
+            case self::ACTION_LOGOUT:
+                break;
+
             default : 
                 throw new \Exception('Unknown controller action ' . $action);
         }
+
+    }
+
+    
+    protected function forwardRequest(array $errors = null, string $target = null) : never {
+        if ($target == null)  {
+            if (!isset($_REQUEST[self::PAGE])) {
+                throw new \Exception(('missing target for forward'));
+            }
+            $target = $_REQUEST[self::PAGE];    
+        }
+        
+        if (count($errors) > 0) {
+            $target .= '&errors=' . urlencode(serialize($errors));
+        }
+        header('location: ' . $target);
+        exit();
+
     }
 
 }
