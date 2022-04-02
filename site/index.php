@@ -1,6 +1,6 @@
 <?php 
 require_once('inc/bootstrap.php');
-
+// test
 
 $view = $default_view;
 
