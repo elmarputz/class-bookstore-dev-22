@@ -16,10 +16,12 @@ if (isset($errors) && is_array($errors)) { ?>
 <div class="footer">
 
     <div class="col-sm-8">
-    links
+    <button class="btn btn-primary btn-xs" type="button">
+       <span class="badge"><?php echo Bookshop\Util::escape($cartSize); ?></span> items in cart 
+    </button>
     </div>
     <div class="col-sm-4 pull-right">
-    rechts
+    <p><?php echo date('d.m.Y H:i', time()); ?></p>
     </div>
 
 </div>

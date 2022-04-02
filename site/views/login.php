@@ -3,11 +3,11 @@
 use Bookshop\AuthenticationManager;
 use Bookshop\Util;
 
-/*
+
 if (AuthenticationManager::isAuthenticated()) {
     Util::redirect("index.php");
 }
-*/
+
 
 $userName = $_REQUEST[Bookshop\Controller::USER_NAME] ?? null; 
 ?>
