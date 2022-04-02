@@ -1,5 +1,6 @@
 <?php use Bookshop\Util, Bookshop\ShoppingCart; ?>
 
+
 <table class="table">
   <thead>
   <tr>
@@ -21,6 +22,7 @@
   <?php
   foreach ($books as $book):
     $inCart = ShoppingCart::contains($book->getId());
+
     ?>
     <tr>
       <td><strong>
@@ -35,15 +37,15 @@
       </td>
       <td class="add-remove">
 	      <?php  if ($inCart): ?>
-            <form method="post" action="<?php /* echo Util::action
-            (Bookshop\Controller::ACTION_REMOVE, array('bookId' => $book->getId())); */ ?>">
+            <form method="post" action="<?php  echo Util::action
+            (Bookshop\Controller::ACTION_REMOVE, array('bookId' => $book->getId()));  ?>">
               <button type="submit" role="button" class="btn btn-default btn-xs btn-info">
                 <span class="glyphicon glyphicon-minus"></span>
               </button>
             </form>
 	      <?php else: ?>
-            <form method="post" action="<?php /* echo Util::action
-            (Bookshop\Controller::ACTION_ADD, array('bookId' => $book->getId())); */ ?>">
+            <form method="post" action="<?php  echo Util::action
+            (Bookshop\Controller::ACTION_ADD, array('bookId' => $book->getId()));  ?>">
               <button type="submit" role="button" class="btn btn-default btn-xs btn-success">
                 <span class="glyphicon glyphicon-plus"></span>
               </button>

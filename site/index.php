@@ -11,5 +11,11 @@ if (isset($_REQUEST['view']) &&
 
     }
 
+// wenn post action, dann controller aktivieren
+$postAction = $_REQUEST[Bookshop\Controller::ACTION] ?? null;
+if ($postAction) 
+    Bookshop\Controller::getInstance()->invokePostAction();
+
+
 
 require_once('views/' . $view . '.php');

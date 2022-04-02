@@ -1,3 +1,8 @@
+<?php
+use Bookshop\Util, Bookshop\ShoppingCart;
+$cartSize = ShoppingCart::size();
+?>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -38,7 +43,7 @@
             <ul class="nav navbar-nav navbar-right login">
                 <li>
                     <a href="index.php?view=checkout">
-                       <span class="badge"><?php // echo Util::escape($cartSize); ?></span> <span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span></a>
+                       <span class="badge"><?php echo Bookshop\Util::escape($cartSize); ?></span> <span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span></a>
                 </li>
                 <li class="dropdown">
                     <?php /* if ($user == null): ?>
