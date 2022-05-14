@@ -91,26 +91,107 @@ class DataManager implements IDataManager {
     }
 
     public static function getBooksByCategory(int $categoryId) : array {
-        return [];
+      $books = [];
+      $con = self::getConnection();
+      $res = self::query($con, "
+        SELECT id, categoryId, title, author, price 
+        FROM books
+        WHERE categoryId = ?;  
+      ", [$categoryId]);
+      while ($book = self::fetchObject($res)) {
+        $books[] = new Book($book->id, $book->categoryId, 
+                $book->title, $book->author, $book->price);
+      }
+      self::close($res);
+      self::closeConnection();
+      return $books;
     }
 
 
     public static function getBooksForSearchCriteria (string $term) : array {
-       return [];
+      $books = [];
+      $con = self::getConnection();
+      $res = self::query($con, "
+        SELECT id, categoryId, title, author, price 
+        FROM books
+        WHERE title LIKE ?;  
+      ", ["%" . $term . "%"]);
+      while ($book = self::fetchObject($res)) {
+        $books[] = new Book($book->id, $book->categoryId, 
+                $book->title, $book->author, $book->price);
+      }
+      self::close($res);
+      self::closeConnection();
+      return $books;
    
     }
 
     public static function getUserById (int $userId) : ?User {
-      return null;
+      $user = null;
+      $con = self::getConnection();
+      $res = self::query($con, "
+          SELECT id, userName, passwordHash 
+          FROM users
+          WHERE id = ?;
+      ", [$userId]);
+      if ($u = self::fetchObject($res)) {
+        $user = new User($u->id, $u->userName, $u->passwordHash);
+      }
+      self::close($res);
+      self::closeConnection();
+      return $user;
     }
 
     public static function getUserByUserName (string $userName) : ?User {
-       return null;
+      $user = null;
+      $con = self::getConnection();
+      $res = self::query($con, "
+          SELECT id, userName, passwordHash 
+          FROM users
+          WHERE userName = ?;
+      ", [$userName]);
+      if ($u = self::fetchObject($res)) {
+        $user = new User($u->id, $u->userName, $u->passwordHash);
+      }
+      self::close($res);
+      self::closeConnection();
+      return $user;
     }
 
 
     public static function createOrder (int $userId, array $bookIds, string $nameOnCard, string $cardNumber) : int {
-        return rand();
+        
+      $con = self::getConnection();
+      $con->beginTransaction();
+
+      try {
+        self::query($con, "
+          INSERT INTO orders (
+            userId, 
+            creditCardNumber,
+            creditCardHolder 
+          ) VALUES (
+            ?, ?, ?
+          );
+        ", [$userId, $cardNumber, $nameOnCard]);
+
+        $orderId = self::lastInsertId($con);
+        foreach ($bookIds as $bookId) {
+          self::query($con, "
+          INSERT INTO orderedbooks (
+            orderId, 
+            bookId 
+          ) VALUES ( ?, ?);", [$orderId, $bookId]);
+        } 
+
+        $con->commit();
+      } 
+      catch (\Exception $e) {
+        $con->rollBack();
+        $orderId = null;
+      }
+      self::closeConnection();
+      return $orderId;
     }
 
 
